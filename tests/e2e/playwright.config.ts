@@ -58,11 +58,9 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'npx serve -l 5173 dist',
+    command: 'npx --yes serve@14 -l 5173 dist',
     url: 'http://localhost:5173',
     reuseExistingServer: !process.env.CI,
-    timeout: 30000,
-    stdout: 'ignore',
-    stderr: 'pipe',
+    timeout: 60000,
   },
 });
