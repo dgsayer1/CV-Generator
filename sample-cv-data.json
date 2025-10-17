@@ -1,0 +1,79 @@
+{
+  "personal": {
+    "name": "Sarah Johnson",
+    "title": "Senior Full-Stack Developer",
+    "phone": "07700 123456",
+    "email": "sarah.johnson@example.com",
+    "location": "Manchester, UK",
+    "summary": "Experienced full-stack developer with 8+ years building scalable web applications. Passionate about clean code, test-driven development, and mentoring junior developers. Specialized in React, Node.js, and cloud infrastructure."
+  },
+  "skills": {
+    "Frontend": ["React", "TypeScript", "Next.js", "Tailwind CSS", "Redux"],
+    "Backend": ["Node.js", "Express", "GraphQL", "REST APIs", "PostgreSQL"],
+    "Cloud & DevOps": ["AWS", "Docker", "Kubernetes", "CI/CD", "Terraform"],
+    "Testing": ["Jest", "Playwright", "Cypress", "React Testing Library"]
+  },
+  "jobs": [
+    {
+      "title": "Senior Full-Stack Developer",
+      "dates": "Mar 2021 - Present",
+      "company": "Digital Solutions Ltd",
+      "location": "Manchester, UK",
+      "responsibilities": [
+        "Led development of microservices architecture serving 500K+ users",
+        "Mentored team of 5 junior developers through code reviews and pair programming",
+        "Reduced deployment time by 70% through CI/CD pipeline optimization",
+        "Implemented GraphQL API reducing client-side data fetching by 40%",
+        "Championed TDD practices achieving 95% code coverage across projects"
+      ]
+    },
+    {
+      "title": "Full-Stack Developer",
+      "dates": "Jun 2018 - Feb 2021",
+      "company": "Tech Innovators",
+      "location": "Leeds, UK",
+      "responsibilities": [
+        "Built and maintained React-based SaaS platform with 50K+ active users",
+        "Developed RESTful APIs using Node.js and PostgreSQL",
+        "Implemented real-time features using WebSockets and Redis",
+        "Collaborated with UX team to improve user engagement by 35%"
+      ]
+    },
+    {
+      "title": "Junior Developer",
+      "dates": "Sep 2016 - May 2018",
+      "company": "StartUp Ventures",
+      "location": "Manchester, UK",
+      "responsibilities": [
+        "Developed frontend components using React and Vue.js",
+        "Wrote unit and integration tests using Jest and Enzyme",
+        "Participated in agile ceremonies and sprint planning"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "BSc (Hons) Computer Science",
+      "years": "2013 - 2016",
+      "institution": "University of Manchester"
+    }
+  ],
+  "certifications": [
+    "AWS Certified Solutions Architect - Associate",
+    "React Developer Certification - Meta",
+    "Professional Scrum Master (PSM I)"
+  ],
+  "references": [
+    {
+      "name": "Michael Davies",
+      "title": "Engineering Manager",
+      "company": "Digital Solutions Ltd"
+    },
+    {
+      "name": "Emma Wilson",
+      "title": "Tech Lead",
+      "company": "Tech Innovators"
+    }
+  ],
+  "themeColor": "#2563eb"
+}

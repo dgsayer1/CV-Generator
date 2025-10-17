@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive CV Generator</title>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>Interactive CV Generator</h1>
+      <p>Fill in your details and generate a professional PDF</p>
+      <div class="header-controls">
+        <div class="color-picker-container">
+          <label for="theme-color">Theme Color:</label>
+          <input type="color" id="theme-color" value="#667eea">
+        </div>
+        <div class="font-picker-container">
+          <label for="pdf-font">Font:</label>
+          <select id="pdf-font">
+            <option value="helvetica">Helvetica (Modern)</option>
+            <option value="times">Times (Classic)</option>
+            <option value="courier">Courier (Technical)</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="main-content">
+      <!-- Import Data -->
+      <div class="section import-section">
+        <h2>Import CV Data</h2>
+        <div class="import-compact">
+          <div class="import-file-control">
+            <input type="file" id="json-file" accept=".json">
+            <button class="btn btn-primary" id="load-file-btn">Load File</button>
+          </div>
+          <button class="btn btn-secondary" id="download-template-btn">Download Template</button>
+        </div>
+        <div class="import-status" id="import-status"></div>
+      </div>
+
+      <!-- Personal Information -->
+      <div class="section">
+        <h2>Personal Information</h2>
+        <div class="two-column">
+          <div class="form-group">
+            <label for="name">Full Name</label>
+            <input type="text" id="name" placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="title">Professional Title</label>
+            <input type="text" id="title" placeholder="Software Engineer">
+          </div>
+        </div>
+        <div class="three-column">
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" placeholder="+44 1234 567890">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="john.doe@example.com">
+          </div>
+          <div class="form-group">
+            <label for="location">Location</label>
+            <input type="text" id="location" placeholder="London, UK">
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary -->
+      <div class="section">
+        <h2>Professional Summary</h2>
+        <div class="form-group">
+          <textarea id="summary" placeholder="Write a brief professional summary highlighting your key skills and experience..."></textarea>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="section">
+        <h2>Skills & Expertise</h2>
+        <div id="skills-container" class="skills-container"></div>
+        <button class="btn btn-add" id="add-skill-category-btn">+ Add Skill Category</button>
+      </div>
+
+      <!-- Work Experience -->
+      <div class="section">
+        <h2>Work Experience</h2>
+        <div id="jobs-container"></div>
+        <button class="btn btn-add" id="add-job-btn">+ Add Another Job</button>
+      </div>
+
+      <!-- Education -->
+      <div class="section">
+        <h2>Education</h2>
+        <div id="education-container"></div>
+        <button class="btn btn-add" id="add-education-btn">+ Add Another Education</button>
+      </div>
+
+      <!-- Certifications -->
+      <div class="section">
+        <h2>Certifications</h2>
+        <div id="certifications-container"></div>
+        <button class="btn btn-add" id="add-certification-btn">+ Add Another Certification</button>
+      </div>
+
+      <!-- References -->
+      <div class="section">
+        <h2>References</h2>
+        <div class="reference-box">
+          <h3>Reference 1</h3>
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="ref1-name" placeholder="Jane Smith">
+          </div>
+          <div class="two-column">
+            <div class="form-group">
+              <label>Job Title</label>
+              <input type="text" id="ref1-job-title" placeholder="Manager">
+            </div>
+            <div class="form-group">
+              <label>Company</label>
+              <input type="text" id="ref1-company" placeholder="Company Name">
+            </div>
+          </div>
+        </div>
+        <div class="reference-box" style="margin-top: 20px;">
+          <h3>Reference 2</h3>
+          <div class="form-group">
+            <label>Name</label>
+            <input type="text" id="ref2-name" placeholder="John Johnson">
+          </div>
+          <div class="two-column">
+            <div class="form-group">
+              <label>Job Title</label>
+              <input type="text" id="ref2-job-title" placeholder="Director">
+            </div>
+            <div class="form-group">
+              <label>Company</label>
+              <input type="text" id="ref2-company" placeholder="Company Name">
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="generate-section">
+        <button class="generate-btn" id="generate-pdf-btn">Generate PDF</button>
+        <div class="status-message" id="status"></div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>

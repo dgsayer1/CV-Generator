@@ -1,0 +1,39 @@
+{
+  "name": "cv-generator",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test -c tests/e2e/playwright.config.ts",
+    "test:e2e:ui": "playwright test -c tests/e2e/playwright.config.ts --ui",
+    "test:e2e:debug": "playwright test -c tests/e2e/playwright.config.ts --debug",
+    "test:e2e:report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@testing-library/dom": "^10.4.1",
+    "@testing-library/jest-dom": "^6.9.1",
+    "@types/node": "^24.8.1",
+    "@vitest/coverage-v8": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "happy-dom": "^20.0.4",
+    "jsdom": "^27.0.0",
+    "serve": "^14.2.5",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.10",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "jspdf": "^3.0.3"
+  }
+}

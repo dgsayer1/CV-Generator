@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive CV Generator</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin-bottom: 10px;
+        }
+
+        .main-content {
+            background: white;
+            padding: 30px;
+            border-radius: 0 0 10px 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .section h2 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 1.4em;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #4a5568;
+            font-weight: 600;
+            font-size: 0.9em;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .three-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .job-entry,
+        .education-entry,
+        .cert-entry {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .job-responsibilities {
+            margin-top: 10px;
+        }
+
+        .job-responsibilities textarea {
+            min-height: 120px;
+        }
+
+        .skills-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .skill-category {
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5a67d8;
+        }
+
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #38a169;
+        }
+
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+
+        .btn-add {
+            background: #667eea;
+            color: white;
+            margin-top: 10px;
+        }
+
+        .btn-add:hover {
+            background: #5a67d8;
+        }
+
+        .generate-section {
+            text-align: center;
+            padding: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .generate-btn {
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .generate-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .generate-btn:active {
+            transform: scale(0.95);
+        }
+
+        .status-message {
+            margin-top: 20px;
+            color: white;
+            font-weight: 600;
+        }
+
+        .help-text {
+            font-size: 0.85em;
+            color: #718096;
+            margin-top: 3px;
+        }
+
+        @media (max-width: 768px) {
+
+            .two-column,
+            .three-column,
+            .skills-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Interactive CV Generator</h1>
+            <p>Fill in your details and generate a professional PDF</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Personal Information -->
+            <div class="section">
+                <h2>Personal Information</h2>
+                <div class="two-column">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" value="Daniel Sayer">
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Professional Title</label>
+                        <input type="text" id="title" value="Quality Assurance Specialist">
+                    </div>
+                </div>
+                <div class="three-column">
+                    <div class="form-group">
+                        <label for="phone">Phone</label>
+                        <input type="tel" id="phone" value="07722 524 190">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" value="daniel.sayer89@googlemail.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location</label>
+                        <input type="text" id="location" value="Baldock, SG7 6DG">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary -->
+            <div class="section">
+                <h2>Professional Summary</h2>
+                <div class="form-group">
+                    <textarea
+                        id="summary">Experienced QA Leader with over a decade of expertise in building and scaling quality assurance functions across diverse industries. Currently serving as QA Lead at Deskpro, where I've established the QA function from the ground up. Proven track record in team leadership, having recruited and mentored QA engineers while implementing comprehensive test automation strategies using modern tools like Playwright and Cypress. ISTQB-BCS certified professional with deep technical expertise spanning the full development lifecycle, from manual testing to CI/CD integration. My collaborative leadership style combines strategic thinking with hands-on technical skills, enabling me to drive quality culture and deliver reliable software solutions for global clients.</textarea>
+                </div>
+            </div>
+
+            <!-- Skills -->
+            <div class="section">
+                <h2>Skills & Expertise</h2>
+                <div class="skills-container">
+                    <div class="skill-category">
+                        <label>Test Automation</label>
+                        <textarea id="skills-automation"
+                            placeholder="Enter skills separated by commas">Playwright, Cypress, Selenium, Testcafe, NightwatchJS</textarea>
+                    </div>
+                    <div class="skill-category">
+                        <label>Programming</label>
+                        <textarea id="skills-programming"
+                            placeholder="Enter skills separated by commas">JavaScript, TypeScript, C#, Python, SQL, PHP, PowerShell</textarea>
+                    </div>
+                    <div class="skill-category">
+                        <label>Performance Testing</label>
+                        <textarea id="skills-performance"
+                            placeholder="Enter skills separated by commas">JMeter, K6.io</textarea>
+                    </div>
+                    <div class="skill-category">
+                        <label>Leadership</label>
+                        <textarea id="skills-leadership"
+                            placeholder="Enter skills separated by commas">Team Management, Strategy Formation, Risk Management, Process Improvement</textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Work Experience -->
+            <div class="section">
+                <h2>Work Experience</h2>
+                <div id="jobs-container">
+                    <div class="job-entry">
+                        <div class="two-column">
+                            <div class="form-group">
+                                <label>Job Title</label>
+                                <input type="text" class="job-title" value="QA Lead">
+                            </div>
+                            <div class="form-group">
+                                <label>Dates</label>
+                                <input type="text" class="job-dates" value="2025 - Present">
+                            </div>
+                        </div>
+                        <div class="two-column">
+                            <div class="form-group">
+                                <label>Company</label>
+                                <input type="text" class="job-company" value="Deskpro">
+                            </div>
+                            <div class="form-group">
+                                <label>Location</label>
+                                <input type="text" class="job-location" value="London">
+                            </div>
+                        </div>
+                        <div class="job-responsibilities">
+                            <label>Responsibilities (one per line)</label>
+                            <textarea
+                                class="job-resp">Established and scaled the QA function from the ground up, defining processes, standards, and quality frameworks
+Recruited, onboarded, and mentored QA Engineers, building a high-performing quality assurance team
+Created the Product Quality Coordinator role, streamlining engineering's bug reporting process and improving issue resolution efficiency
+Serve as Release Manager, coordinating deployment processes and ensuring reliable software delivery
+Conduct comprehensive testing using modern automation tools (Playwright with TypeScript) alongside strategic manual testing
+Led process optimization initiatives, reviewing and refactoring existing test suites to improve coverage and maintainability
+Consolidated test case management from disparate tools into a unified system, improving team efficiency and visibility</textarea>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-add" onclick="addJob()">+ Add Another Job</button>
+            </div>
+
+            <!-- Education -->
+            <div class="section">
+                <h2>Education</h2>
+                <div id="education-container">
+                    <div class="education-entry">
+                        <div class="two-column">
+                            <div class="form-group">
+                                <label>Degree</label>
+                                <input type="text" class="edu-degree" value="BSc Medicinal Chemistry & Psychology">
+                            </div>
+                            <div class="form-group">
+                                <label>Years</label>
+                                <input type="text" class="edu-years" value="2007 - 2010">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Institution</label>
+                            <input type="text" class="edu-institution" value="University of Keele">
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-add" onclick="addEducation()">+ Add Another Education</button>
+            </div>
+
+            <!-- Certifications -->
+            <div class="section">
+                <h2>Certifications</h2>
+                <div id="certifications-container">
+                    <div class="cert-entry">
+                        <input type="text" class="certification"
+                            value="Certified Tester, Advanced Level, Test Analyst (ISTQB)">
+                    </div>
+                    <div class="cert-entry">
+                        <input type="text" class="certification" value="Programming With C# (London Academy of IT)">
+                    </div>
+                    <div class="cert-entry">
+                        <input type="text" class="certification" value="ISTQB-BCS Certified Tester Foundation Level">
+                    </div>
+                </div>
+                <button class="btn btn-add" onclick="addCertification()">+ Add Another Certification</button>
+            </div>
+
+            <!-- References -->
+            <div class="section">
+                <h2>References</h2>
+                <div class="two-column">
+                    <div>
+                        <div class="form-group">
+                            <label>Reference 1 - Name</label>
+                            <input type="text" id="ref1-name" value="Steve Cole">
+                        </div>
+                        <div class="form-group">
+                            <label>Reference 1 - Title</label>
+                            <input type="text" id="ref1-title" value="CTO, Morrisby">
+                        </div>
+                    </div>
+                    <div>
+                        <div class="form-group">
+                            <label>Reference 2 - Name</label>
+                            <input type="text" id="ref2-name" value="Chris Nadeau">
+                        </div>
+                        <div class="form-group">
+                            <label>Reference 2 - Title</label>
+                            <input type="text" id="ref2-title" value="CTO, Deskpro">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="generate-section">
+                <button class="generate-btn" onclick="generatePDF()">Generate PDF</button>
+                <div class="status-message" id="status"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function addJob() {
+            const container = document.getElementById('jobs-container');
+            const newJob = document.createElement('div');
+            newJob.className = 'job-entry';
+            newJob.innerHTML = `
+                <div class="two-column">
+                    <div class="form-group">
+                        <label>Job Title</label>
+                        <input type="text" class="job-title" placeholder="Enter job title">
+                    </div>
+                    <div class="form-group">
+                        <label>Dates</label>
+                        <input type="text" class="job-dates" placeholder="e.g. 2020 - 2023">
+                    </div>
+                </div>
+                <div class="two-column">
+                    <div class="form-group">
+                        <label>Company</label>
+                        <input type="text" class="job-company" placeholder="Company name">
+                    </div>
+                    <div class="form-group">
+                        <label>Location</label>
+                        <input type="text" class="job-location" placeholder="City, Country">
+                    </div>
+                </div>
+                <div class="job-responsibilities">
+                    <label>Responsibilities (one per line)</label>
+                    <textarea class="job-resp" placeholder="Enter each responsibility on a new line"></textarea>
+                </div>
+                <button class="btn btn-danger" onclick="this.parentElement.remove()">Remove</button>
+            `;
+            container.appendChild(newJob);
+        }
+
+        function addEducation() {
+            const container = document.getElementById('education-container');
+            const newEdu = document.createElement('div');
+            newEdu.className = 'education-entry';
+            newEdu.innerHTML = `
+                <div class="two-column">
+                    <div class="form-group">
+                        <label>Degree</label>
+                        <input type="text" class="edu-degree" placeholder="Enter degree">
+                    </div>
+                    <div class="form-group">
+                        <label>Years</label>
+                        <input type="text" class="edu-years" placeholder="e.g. 2015 - 2019">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Institution</label>
+                    <input type="text" class="edu-institution" placeholder="University/College name">
+                </div>
+                <button class="btn btn-danger" onclick="this.parentElement.remove()">Remove</button>
+            `;
+            container.appendChild(newEdu);
+        }
+
+        function addCertification() {
+            const container = document.getElementById('certifications-container');
+            const newCert = document.createElement('div');
+            newCert.className = 'cert-entry';
+            newCert.innerHTML = `
+                <input type="text" class="certification" placeholder="Enter certification">
+                <button class="btn btn-danger" onclick="this.parentElement.remove()" style="margin-top: 5px;">Remove</button>
+            `;
+            container.appendChild(newCert);
+        }
+
+        function generatePDF() {
+            const statusEl = document.getElementById('status');
+            statusEl.textContent = 'Generating PDF...';
+
+            try {
+                const { jsPDF } = window.jspdf;
+                const doc = new jsPDF({
+                    orientation: 'portrait',
+                    unit: 'mm',
+                    format: 'a4'
+                });
+
+                // Get form data
+                const name = document.getElementById('name').value;
+                const title = document.getElementById('title').value;
+                const phone = document.getElementById('phone').value;
+                const email = document.getElementById('email').value;
+                const location = document.getElementById('location').value;
+                const summary = document.getElementById('summary').value;
+
+                // Colours
+                const purple = [102, 126, 234];
+                const textDark = [45, 55, 72];
+                const textGrey = [102, 102, 102];
+                const lightGrey = [85, 85, 85];
+
+                // Header
+                doc.setFillColor(102, 126, 234);
+                doc.rect(0, 0, 210, 42, 'F');
+
+                doc.setTextColor(255, 255, 255);
+                doc.setFontSize(24);
+                doc.setFont('helvetica', 'bold');
+                doc.text(name, 105, 18, { align: 'center' });
+
+                doc.setFontSize(10);
+                doc.setFont('helvetica', 'normal');
+                doc.text(title.toUpperCase(), 105, 26, { align: 'center' });
+
+                doc.setFontSize(9);
+                doc.text(`${phone}  •  ${email}  •  ${location}`, 105, 35, { align: 'center' });
+
+                // Summary
+                let y = 52;
+                doc.setTextColor(...lightGrey);
+                doc.setFontSize(9);
+                const summaryLines = doc.splitTextToSize(summary, 180);
+                doc.text(summaryLines, 15, y);
+
+                // Skills
+                y = 52 + (summaryLines.length * 3.5) + 10;
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(...textDark);
+                doc.text('Skills & Expertise', 15, y);
+                doc.setDrawColor(...purple);
+                doc.setLineWidth(0.5);
+                doc.line(15, y + 1.5, 195, y + 1.5);
+
+                y += 9;
+
+                // Get skills
+                const skills = [
+                    { cat: 'Test Automation', items: document.getElementById('skills-automation').value.split(',').map(s => s.trim()).filter(s => s) },
+                    { cat: 'Programming', items: document.getElementById('skills-programming').value.split(',').map(s => s.trim()).filter(s => s) },
+                    { cat: 'Performance Testing', items: document.getElementById('skills-performance').value.split(',').map(s => s.trim()).filter(s => s) },
+                    { cat: 'Leadership', items: document.getElementById('skills-leadership').value.split(',').map(s => s.trim()).filter(s => s) }
+                ];
+
+                doc.setFontSize(9);
+                let col = 0;
+                let colX = [15, 105];
+                let colY = [y, y];
+
+                skills.forEach((skill, idx) => {
+                    if (skill.items.length > 0) {
+                        col = idx < 2 ? idx : idx - 2;
+                        let x = colX[col];
+                        let cy = colY[col];
+
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(...textDark);
+                        doc.text(skill.cat, x, cy);
+                        cy += 4.5;
+
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(...lightGrey);
+                        skill.items.forEach(item => {
+                            doc.text('• ' + item, x + 2, cy);
+                            cy += 3.8;
+                        });
+
+                        colY[col] = cy + 2;
+                    }
+                });
+
+                y = Math.max(...colY) + 5;
+
+                // Work Experience
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(...textDark);
+                doc.text('Work Experience', 15, y);
+                doc.line(15, y + 1.5, 195, y + 1.5);
+
+                y += 9;
+
+                // Get all jobs
+                const jobEntries = document.querySelectorAll('.job-entry');
+                jobEntries.forEach((job, index) => {
+                    if (y > 250) {
+                        doc.addPage();
+                        y = 20;
+                    }
+
+                    const jobTitle = job.querySelector('.job-title').value;
+                    const jobDates = job.querySelector('.job-dates').value;
+                    const jobCompany = job.querySelector('.job-company').value;
+                    const jobLocation = job.querySelector('.job-location').value;
+                    const jobResp = job.querySelector('.job-resp').value;
+
+                    if (jobTitle) {
+                        doc.setFontSize(10.5);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(...textDark);
+                        doc.text(jobTitle, 15, y);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(...purple);
+                        doc.text(jobDates, 195, y, { align: 'right' });
+                        doc.setTextColor(...textGrey);
+                        doc.setFontSize(9);
+                        doc.text(`${jobCompany} | ${jobLocation}`, 15, y + 4.5);
+
+                        y += 9;
+                        doc.setTextColor(...lightGrey);
+                        doc.setFontSize(8.5);
+
+                        const responsibilities = jobResp.split('\n').filter(r => r.trim());
+                        responsibilities.forEach(resp => {
+                            const respLines = doc.splitTextToSize('• ' + resp.trim(), 175);
+                            doc.text(respLines, 17, y);
+                            y += respLines.length * 3.5;
+                        });
+
+                        y += 6;
+                    }
+                });
+
+                // Education
+                if (y > 200) {
+                    doc.addPage();
+                    y = 20;
+                }
+
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(...textDark);
+                doc.text('Education', 15, y);
+                doc.line(15, y + 1.5, 195, y + 1.5);
+
+                y += 9;
+
+                const eduEntries = document.querySelectorAll('.education-entry');
+                eduEntries.forEach(edu => {
+                    const degree = edu.querySelector('.edu-degree').value;
+                    const years = edu.querySelector('.edu-years').value;
+                    const institution = edu.querySelector('.edu-institution').value;
+
+                    if (degree) {
+                        doc.setFontSize(9);
+                        doc.setFont('helvetica', 'bold');
+                        doc.setTextColor(...textDark);
+                        doc.text(degree, 15, y);
+                        doc.setFont('helvetica', 'normal');
+                        doc.setTextColor(...textGrey);
+                        doc.text(institution, 15, y + 4);
+                        doc.setTextColor(...purple);
+                        doc.text(years, 195, y, { align: 'right' });
+                        y += 11;
+                    }
+                });
+
+                // Certifications
+                y += 5;
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(...textDark);
+                doc.text('Certifications', 15, y);
+                doc.line(15, y + 1.5, 195, y + 1.5);
+
+                y += 9;
+                doc.setFontSize(8.5);
+                doc.setFont('helvetica', 'normal');
+                doc.setTextColor(...lightGrey);
+
+                const certEntries = document.querySelectorAll('.certification');
+                certEntries.forEach(cert => {
+                    if (cert.value) {
+                        const certLines = doc.splitTextToSize('• ' + cert.value, 175);
+                        doc.text(certLines, 17, y);
+                        y += certLines.length * 3.8;
+                    }
+                });
+
+                // References
+                y += 10;
+                if (y > 240) {
+                    doc.addPage();
+                    y = 20;
+                }
+
+                doc.setFontSize(12);
+                doc.setFont('helvetica', 'bold');
+                doc.setTextColor(...textDark);
+                doc.text('References', 15, y);
+                doc.line(15, y + 1.5, 195, y + 1.5);
+
+                y += 9;
+
+                // Reference 1
+                const ref1Name = document.getElementById('ref1-name').value;
+                const ref1Title = document.getElementById('ref1-title').value;
+
+                if (ref1Name) {
+                    doc.setFontSize(10);
+                    doc.setFont('helvetica', 'bold');
+                    doc.text(ref1Name, 15, y);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(...textGrey);
+                    doc.setFontSize(9);
+                    doc.text(ref1Title, 15, y + 4);
+                    doc.setFont('helvetica', 'italic');
+                    doc.setFontSize(8);
+                    doc.setTextColor(136, 136, 136);
+                    doc.text('Contact details can be provided upon request', 15, y + 8);
+                }
+
+                // Reference 2
+                const ref2Name = document.getElementById('ref2-name').value;
+                const ref2Title = document.getElementById('ref2-title').value;
+
+                if (ref2Name) {
+                    doc.setFontSize(10);
+                    doc.setFont('helvetica', 'bold');
+                    doc.setTextColor(...textDark);
+                    doc.text(ref2Name, 105, y);
+                    doc.setFont('helvetica', 'normal');
+                    doc.setTextColor(...textGrey);
+                    doc.setFontSize(9);
+                    doc.text(ref2Title, 105, y + 4);
+                    doc.setFont('helvetica', 'italic');
+                    doc.setFontSize(8);
+                    doc.setTextColor(136, 136, 136);
+                    doc.text('Contact details can be provided upon request', 105, y + 8);
+                }
+
+                // Save PDF
+                const filename = `${name.replace(/\s+/g, '_')}_CV.pdf`;
+                doc.save(filename);
+                statusEl.textContent = `✅ PDF downloaded as ${filename}`;
+
+            } catch (error) {
+                statusEl.textContent = '❌ Error generating PDF. Please check your inputs and try again.';
+                console.error('PDF generation error:', error);
+            }
+        }
+    </script>
+</body>
+
+</html>

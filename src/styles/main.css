@@ -1,0 +1,499 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f0f2f5;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 30px;
+  border-radius: 10px 10px 0 0;
+  text-align: center;
+}
+
+.header h1 {
+  margin-bottom: 10px;
+}
+
+.header-controls {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.color-picker-container,
+.font-picker-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-picker-container label,
+.font-picker-container label {
+  color: white;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.color-picker-container input[type="color"] {
+  width: 50px;
+  height: 35px;
+  border: 2px solid white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.font-picker-container select {
+  padding: 8px 12px;
+  border: 2px solid white;
+  border-radius: 5px;
+  background: white;
+  color: #2d3748;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  min-width: 120px;
+}
+
+.main-content {
+  background: white;
+  padding: 30px;
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+}
+
+:root {
+  --theme-color: #667eea;
+}
+
+.section {
+  margin-bottom: 30px;
+  padding: 20px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border-left: 4px solid var(--theme-color);
+}
+
+.section h2 {
+  color: #2d3748;
+  margin-bottom: 20px;
+  font-size: 1.4em;
+}
+
+.section h3 {
+  color: #4a5568;
+  margin-bottom: 15px;
+  font-size: 1.1em;
+  font-weight: 600;
+}
+
+.form-group {
+  margin-bottom: 15px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  color: #4a5568;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+textarea {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #cbd5e0;
+  border-radius: 5px;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--theme-color);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.two-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.job-entry .two-column:first-child {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+}
+
+.education-entry .two-column {
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+}
+
+.three-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+}
+
+.job-entry,
+.education-entry,
+.cert-entry {
+  background: white;
+  padding: 15px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #e2e8f0;
+}
+
+.job-entry {
+  overflow: hidden;
+  max-width: 100%;
+}
+
+.job-entry .two-column {
+  align-items: start;
+  min-width: 0;
+}
+
+.job-entry .job-title,
+.job-entry .job-dates,
+.job-entry .job-company,
+.job-entry .job-location {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+  max-width: 100%;
+}
+
+.job-entry .job-resp {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.education-entry .two-column {
+  align-items: start;
+  gap: 10px;
+}
+
+.education-entry .edu-degree {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
+}
+
+.job-responsibilities {
+  margin-top: 10px;
+}
+
+.job-responsibilities textarea {
+  min-height: 120px;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  word-break: break-word;
+  white-space: pre-wrap;
+  overflow-x: hidden;
+}
+
+.skills-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.skill-category {
+  background: white;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #e2e8f0;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: var(--theme-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--theme-color);
+  filter: brightness(0.9);
+}
+
+.btn-secondary {
+  background: #718096;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background: #4a5568;
+}
+
+.btn-success {
+  background: #48bb78;
+  color: white;
+}
+
+.btn-success:hover {
+  background: #38a169;
+}
+
+.btn-danger {
+  background: #f56565;
+  color: white;
+}
+
+.btn-danger:hover {
+  background: #e53e3e;
+}
+
+.btn-add {
+  background: var(--theme-color);
+  color: white;
+  margin-top: 10px;
+}
+
+.btn-add:hover {
+  background: var(--theme-color);
+  filter: brightness(0.9);
+}
+
+.generate-section {
+  text-align: center;
+  padding: 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.generate-btn {
+  background: white;
+  color: var(--theme-color);
+  padding: 15px 40px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.generate-btn:hover {
+  transform: scale(1.05);
+}
+
+.generate-btn:active {
+  transform: scale(0.95);
+}
+
+.status-message {
+  margin-top: 20px;
+  color: white;
+  font-weight: 600;
+}
+
+.help-text {
+  font-size: 0.85em;
+  color: #718096;
+  margin-top: 3px;
+}
+
+/* Date Picker Styles */
+.date-picker {
+  width: 100%;
+}
+
+.date-picker label {
+  text-align: right;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.date-range-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.date-range-container select {
+  padding: 8px 12px;
+  border: 1px solid #cbd5e0;
+  border-radius: 5px;
+  font-size: 14px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.date-range-container select:hover {
+  border-color: var(--theme-color);
+}
+
+.date-range-container select:focus {
+  outline: none;
+  border-color: var(--theme-color);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.date-range-container .month-select {
+  min-width: 80px;
+}
+
+.date-range-container .year-select {
+  min-width: 85px;
+}
+
+.date-range-container > span {
+  color: #718096;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 0 4px;
+}
+
+.date-range-container .end-date-container {
+  display: flex;
+  gap: 8px;
+  transition: opacity 0.2s;
+}
+
+.date-range-container input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+  accent-color: var(--theme-color);
+}
+
+.date-range-container label {
+  margin: 0;
+  color: #4a5568;
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Import Section Styles */
+.import-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-left: 4px solid var(--theme-color);
+}
+
+.import-compact {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.import-file-control {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex: 1;
+  min-width: 300px;
+}
+
+.import-file-control input[type="file"] {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #cbd5e0;
+  border-radius: 5px;
+  font-size: 14px;
+  background: white;
+}
+
+.import-file-control button,
+.import-compact > button {
+  white-space: nowrap;
+}
+
+.import-status {
+  margin-top: 15px;
+  padding: 12px;
+  border-radius: 5px;
+  font-size: 14px;
+  font-weight: 500;
+  min-height: 20px;
+}
+
+.import-status.success {
+  background: #c6f6d5;
+  color: #22543d;
+  border: 1px solid #9ae6b4;
+}
+
+.import-status.error {
+  background: #fed7d7;
+  color: #742a2a;
+  border: 1px solid #fc8181;
+}
+
+@media (max-width: 768px) {
+  .two-column,
+  .three-column,
+  .skills-container {
+    grid-template-columns: 1fr;
+  }
+
+  .date-range-container .month-select {
+    min-width: 70px;
+  }
+
+  .date-range-container .year-select {
+    min-width: 75px;
+  }
+
+  .import-compact {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .import-file-control {
+    min-width: 100%;
+  }
+
+  .import-compact > button {
+    width: 100%;
+  }
+}
