@@ -21,7 +21,7 @@ test.describe('Dynamic Forms - Add/Remove Entries', () => {
   test.describe('Work Experience', () => {
     test('should start with one job entry', async () => {
       const initialCount = await cvPage.getJobCount();
-      expect(initialCount).toBe(1);
+      expect(initialCount).toBe(2); // App loads with 2 default jobs from defaultData.ts
     });
 
     test('should add a new job entry', async () => {
