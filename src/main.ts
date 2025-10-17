@@ -213,7 +213,9 @@ function populateFormWithData(data: PartialCVData): void {
     const colorPicker = document.getElementById('theme-color') as HTMLInputElement;
     if (colorPicker) {
       colorPicker.value = data.themeColor;
-      handleColorChange({ target: colorPicker } as Event);
+      const event = new Event('input', { bubbles: true });
+      Object.defineProperty(event, 'target', { value: colorPicker, enumerable: true });
+      handleColorChange(event);
     }
   }
 }
@@ -314,7 +316,6 @@ function handleGeneratePDF(): void {
 }
 
 async function handleLoadFromFile(): Promise<void> {
-  const statusEl = document.getElementById('import-status');
   const fileInput = document.getElementById('json-file') as HTMLInputElement;
   const file = fileInput.files?.[0];
 
