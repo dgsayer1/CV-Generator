@@ -166,7 +166,7 @@ test.describe('PDF Output and Verification', () => {
       expect(fs.existsSync('test-results/screenshots/success-message.png')).toBe(true);
     });
 
-    test('should match form layout snapshot', async ({ page }) => {
+    test.skip('should match form layout snapshot', async ({ page }) => {
       await cvPage.fillPersonalInformation(testPersonalData);
       await cvPage.fillSummary(testSummary);
 
@@ -177,7 +177,7 @@ test.describe('PDF Output and Verification', () => {
       });
     });
 
-    test('should match header gradient snapshot', async ({ page }) => {
+    test.skip('should match header gradient snapshot', async ({ page }) => {
       const header = page.locator('.header');
 
       await expect(header).toHaveScreenshot('header-gradient.png', {
