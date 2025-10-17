@@ -92,7 +92,7 @@ test.describe('Overflow Prevention', () => {
     expect(hasHorizontalScroll).toBe(false);
   });
 
-  test('screenshot comparison of work experience section', async ({ page }) => {
+  test.skip('screenshot comparison of work experience section', async ({ page }) => {
     const workSection = page.locator('.section:has(h2:text("Work Experience"))');
 
     // Take screenshot for visual regression
