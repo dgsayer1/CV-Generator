@@ -58,7 +58,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'npx --yes serve@14 -l 5173 dist',
+    command: 'npm run preview -- --port 5173 --strictPort',
     url: 'http://localhost:5173',
     reuseExistingServer: !process.env.CI,
     timeout: 60000,
