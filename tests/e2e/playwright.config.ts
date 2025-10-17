@@ -6,6 +6,7 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
+  maxFailures: 5,
   reporter: [
     ['html', { outputFolder: 'playwright-report' }],
     ['list']
@@ -57,7 +58,7 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: 'npx serve -l 5173 .',
+    command: 'npx serve -l 5173 dist',
     port: 5173,
     reuseExistingServer: !process.env.CI,
     timeout: 10000,
