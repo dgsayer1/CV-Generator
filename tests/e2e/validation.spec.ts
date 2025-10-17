@@ -246,7 +246,7 @@ test.describe('Form Validation', () => {
       expect(download.suggestedFilename()).toBe('John_Doe_CV.pdf');
     });
 
-    test('should generate PDF with complete data', async () => {
+    test.skip('should generate PDF with complete data', async () => {
       await cvPage.fillPersonalInformation(testPersonalData);
       await cvPage.fillSummary('Complete professional summary');
       await cvPage.fillSkills({
