@@ -84,7 +84,7 @@ export class CVGeneratorPage {
   }
 
   async goto() {
-    await this.page.goto('/generator.html');
+    await this.page.goto('/');
   }
 
   async verifyAllSectionsVisible() {
