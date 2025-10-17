@@ -52,7 +52,7 @@ test.describe('Overflow Prevention', () => {
 
     // Check degree and years inputs
     const degreeBox = await eduEntry.locator('.edu-degree').boundingBox();
-    const yearsBox = await eduEntry.locator('.edu-years').boundingBox();
+    const yearsBox = await eduEntry.locator('.edu-years-picker').boundingBox();
 
     if (degreeBox && yearsBox && containerBox) {
       expect(degreeBox.x + degreeBox.width).toBeLessThanOrEqual(containerBox.x + containerBox.width + 5);

@@ -191,12 +191,14 @@ test.describe('Form Validation', () => {
       await expect(cvPage.nameInput).toHaveValue(unicodeName);
     });
 
-    test('should handle bullet points in skills', async () => {
-      const skillsWithBullets = '• Playwright\n• Cypress\n• Selenium';
-      await cvPage.skillsAutomation.clear();
-      await cvPage.skillsAutomation.fill(skillsWithBullets);
+    test('should handle bullet points in responsibilities', async () => {
+      const respWithBullets = '• Led team of 5\n• Increased performance by 50%\n• Deployed to production';
 
-      await expect(cvPage.skillsAutomation).toHaveValue(skillsWithBullets);
+      const firstJob = cvPage.page.locator('.job-entry').first();
+      await firstJob.locator('.job-resp').clear();
+      await firstJob.locator('.job-resp').fill(respWithBullets);
+
+      await expect(firstJob.locator('.job-resp')).toHaveValue(respWithBullets);
     });
   });
 
@@ -218,6 +220,7 @@ test.describe('Form Validation', () => {
       await cvPage.page.keyboard.press('Control+A');
       await cvPage.page.keyboard.press('Control+C');
 
+      await cvPage.nameInput.clear();
       await cvPage.nameInput.click();
       await cvPage.page.keyboard.press('Control+V');
 
