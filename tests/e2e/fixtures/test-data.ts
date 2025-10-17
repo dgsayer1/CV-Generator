@@ -9,10 +9,10 @@ export const testPersonalData = {
 export const testSummary = 'Experienced software engineer with 10+ years of expertise in building scalable web applications. Proven track record in leading development teams and delivering high-quality software solutions.';
 
 export const testSkills = {
-  automation: 'Playwright, Cypress, Selenium, Jest',
-  programming: 'JavaScript, TypeScript, Python, Java',
-  performance: 'JMeter, Gatling, Artillery',
-  leadership: 'Team Leadership, Mentoring, Agile Methodologies',
+  'Test Automation': ['Playwright', 'Cypress', 'Selenium', 'Jest'],
+  'Programming': ['JavaScript', 'TypeScript', 'Python', 'Java'],
+  'Performance Testing': ['JMeter', 'Gatling', 'Artillery'],
+  'Leadership': ['Team Leadership', 'Mentoring', 'Agile Methodologies'],
 };
 
 export const testJob1 = {
@@ -49,9 +49,11 @@ export const testCertification3 = 'Professional Scrum Master';
 
 export const testReferences = {
   ref1Name: 'Jane Smith',
-  ref1Title: 'Engineering Manager, Tech Corp',
+  ref1JobTitle: 'Engineering Manager',
+  ref1Company: 'Tech Corp',
   ref2Name: 'Bob Johnson',
-  ref2Title: 'CTO, Startup Inc',
+  ref2JobTitle: 'CTO',
+  ref2Company: 'Startup Inc',
 };
 
 export const invalidEmails = [

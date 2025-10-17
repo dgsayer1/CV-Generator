@@ -14,10 +14,8 @@ export class CVGeneratorPage {
   readonly summaryTextarea: Locator;
 
   // Skills
-  readonly skillsAutomation: Locator;
-  readonly skillsProgramming: Locator;
-  readonly skillsPerformance: Locator;
-  readonly skillsLeadership: Locator;
+  readonly skillsContainer: Locator;
+  readonly addSkillCategoryButton: Locator;
 
   // Work Experience
   readonly jobsContainer: Locator;
@@ -33,9 +31,11 @@ export class CVGeneratorPage {
 
   // References
   readonly ref1NameInput: Locator;
-  readonly ref1TitleInput: Locator;
+  readonly ref1JobTitleInput: Locator;
+  readonly ref1CompanyInput: Locator;
   readonly ref2NameInput: Locator;
-  readonly ref2TitleInput: Locator;
+  readonly ref2JobTitleInput: Locator;
+  readonly ref2CompanyInput: Locator;
 
   // Generate
   readonly generateButton: Locator;
@@ -55,10 +55,8 @@ export class CVGeneratorPage {
     this.summaryTextarea = page.locator('#summary');
 
     // Skills
-    this.skillsAutomation = page.locator('#skills-automation');
-    this.skillsProgramming = page.locator('#skills-programming');
-    this.skillsPerformance = page.locator('#skills-performance');
-    this.skillsLeadership = page.locator('#skills-leadership');
+    this.skillsContainer = page.locator('#skills-container');
+    this.addSkillCategoryButton = page.getByRole('button', { name: '+ Add Skill Category' });
 
     // Work Experience
     this.jobsContainer = page.locator('#jobs-container');
@@ -74,9 +72,11 @@ export class CVGeneratorPage {
 
     // References
     this.ref1NameInput = page.locator('#ref1-name');
-    this.ref1TitleInput = page.locator('#ref1-title');
+    this.ref1JobTitleInput = page.locator('#ref1-job-title');
+    this.ref1CompanyInput = page.locator('#ref1-company');
     this.ref2NameInput = page.locator('#ref2-name');
-    this.ref2TitleInput = page.locator('#ref2-title');
+    this.ref2JobTitleInput = page.locator('#ref2-job-title');
+    this.ref2CompanyInput = page.locator('#ref2-company');
 
     // Generate
     this.generateButton = page.getByRole('button', { name: 'Generate PDF' });
@@ -121,28 +121,53 @@ export class CVGeneratorPage {
     await this.summaryTextarea.fill(summary);
   }
 
-  async fillSkills(data: {
-    automation?: string;
-    programming?: string;
-    performance?: string;
-    leadership?: string;
-  }) {
-    if (data.automation) {
-      await this.skillsAutomation.clear();
-      await this.skillsAutomation.fill(data.automation);
+  async fillSkills(skills: Record<string, string[]>) {
+    // Wait for default data to load
+    await this.page.waitForSelector('.skill-category', { timeout: 10000 });
+
+    // Clear existing skill categories
+    const existingCategories = this.page.locator('.skill-category');
+    const count = await existingCategories.count();
+    for (let i = 0; i < count; i++) {
+      await existingCategories.first().locator('button:has-text("Remove Category")').click();
     }
-    if (data.programming) {
-      await this.skillsProgramming.clear();
-      await this.skillsProgramming.fill(data.programming);
+
+    // Add new skill categories
+    for (const [categoryName, skillItems] of Object.entries(skills)) {
+      await this.addSkillCategoryButton.click();
+
+      const categories = this.page.locator('.skill-category');
+      const lastCategory = categories.last();
+
+      // Fill category name
+      await lastCategory.locator('.skill-category-name').fill(categoryName);
+
+      // Clear the default skill item and add all skills
+      const skillInputs = lastCategory.locator('.skill-item-input');
+      const firstInput = skillInputs.first();
+      await firstInput.fill(skillItems[0]);
+
+      // Add remaining skills
+      for (let i = 1; i < skillItems.length; i++) {
+        await lastCategory.locator('button:has-text("+ Add Skill")').click();
+        await skillInputs.nth(i).fill(skillItems[i]);
+      }
     }
-    if (data.performance) {
-      await this.skillsPerformance.clear();
-      await this.skillsPerformance.fill(data.performance);
+  }
+
+  async getSkillCategoryCount(): Promise<number> {
+    return await this.page.locator('.skill-category').count();
+  }
+
+  async getSkillsInCategory(categoryIndex: number): Promise<string[]> {
+    const category = this.page.locator('.skill-category').nth(categoryIndex);
+    const skillInputs = category.locator('.skill-item-input');
+    const count = await skillInputs.count();
+    const skills: string[] = [];
+    for (let i = 0; i < count; i++) {
+      skills.push(await skillInputs.nth(i).inputValue());
     }
-    if (data.leadership) {
-      await this.skillsLeadership.clear();
-      await this.skillsLeadership.fill(data.leadership);
-    }
+    return skills;
   }
 
   async addJob(data: {
@@ -232,25 +257,35 @@ export class CVGeneratorPage {
 
   async fillReferences(data: {
     ref1Name?: string;
-    ref1Title?: string;
+    ref1JobTitle?: string;
+    ref1Company?: string;
     ref2Name?: string;
-    ref2Title?: string;
+    ref2JobTitle?: string;
+    ref2Company?: string;
   }) {
     if (data.ref1Name) {
       await this.ref1NameInput.clear();
       await this.ref1NameInput.fill(data.ref1Name);
     }
-    if (data.ref1Title) {
-      await this.ref1TitleInput.clear();
-      await this.ref1TitleInput.fill(data.ref1Title);
+    if (data.ref1JobTitle) {
+      await this.ref1JobTitleInput.clear();
+      await this.ref1JobTitleInput.fill(data.ref1JobTitle);
+    }
+    if (data.ref1Company) {
+      await this.ref1CompanyInput.clear();
+      await this.ref1CompanyInput.fill(data.ref1Company);
     }
     if (data.ref2Name) {
       await this.ref2NameInput.clear();
       await this.ref2NameInput.fill(data.ref2Name);
     }
-    if (data.ref2Title) {
-      await this.ref2TitleInput.clear();
-      await this.ref2TitleInput.fill(data.ref2Title);
+    if (data.ref2JobTitle) {
+      await this.ref2JobTitleInput.clear();
+      await this.ref2JobTitleInput.fill(data.ref2JobTitle);
+    }
+    if (data.ref2Company) {
+      await this.ref2CompanyInput.clear();
+      await this.ref2CompanyInput.fill(data.ref2Company);
     }
   }
 

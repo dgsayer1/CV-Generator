@@ -45,19 +45,24 @@ test.describe('CV Generation - Basic Flow', () => {
   test('should fill in skills', async () => {
     await cvPage.fillSkills(testSkills);
 
-    await expect(cvPage.skillsAutomation).toHaveValue(testSkills.automation);
-    await expect(cvPage.skillsProgramming).toHaveValue(testSkills.programming);
-    await expect(cvPage.skillsPerformance).toHaveValue(testSkills.performance);
-    await expect(cvPage.skillsLeadership).toHaveValue(testSkills.leadership);
+    // Verify skill categories were created
+    const categoryCount = await cvPage.getSkillCategoryCount();
+    expect(categoryCount).toBe(Object.keys(testSkills).length);
+
+    // Verify first category skills
+    const firstCategorySkills = await cvPage.getSkillsInCategory(0);
+    expect(firstCategorySkills).toEqual(testSkills['Test Automation']);
   });
 
   test('should fill in references', async () => {
     await cvPage.fillReferences(testReferences);
 
     await expect(cvPage.ref1NameInput).toHaveValue(testReferences.ref1Name);
-    await expect(cvPage.ref1TitleInput).toHaveValue(testReferences.ref1Title);
+    await expect(cvPage.ref1JobTitleInput).toHaveValue(testReferences.ref1JobTitle);
+    await expect(cvPage.ref1CompanyInput).toHaveValue(testReferences.ref1Company);
     await expect(cvPage.ref2NameInput).toHaveValue(testReferences.ref2Name);
-    await expect(cvPage.ref2TitleInput).toHaveValue(testReferences.ref2Title);
+    await expect(cvPage.ref2JobTitleInput).toHaveValue(testReferences.ref2JobTitle);
+    await expect(cvPage.ref2CompanyInput).toHaveValue(testReferences.ref2Company);
   });
 
   test('should generate PDF and verify download', async ({ page }) => {
