@@ -20,11 +20,11 @@ test.describe('CV Generation - Basic Flow', () => {
   });
 
   test('should have pre-filled data on page load', async () => {
-    // Check that the form has default values (Daniel Sayer's data)
-    await expect(cvPage.nameInput).toHaveValue('Daniel Sayer');
-    await expect(cvPage.titleInput).toHaveValue('Quality Assurance Specialist');
-    await expect(cvPage.phoneInput).toHaveValue('07722 524 190');
-    await expect(cvPage.emailInput).toHaveValue('daniel.sayer89@googlemail.com');
+    // Check that the form has default values (test data)
+    await expect(cvPage.nameInput).toHaveValue(testPersonalData.name);
+    await expect(cvPage.titleInput).toHaveValue(testPersonalData.title);
+    await expect(cvPage.phoneInput).toHaveValue(testPersonalData.phone);
+    await expect(cvPage.emailInput).toHaveValue(testPersonalData.email);
   });
 
   test('should fill in personal information', async () => {
