@@ -102,8 +102,9 @@ test.describe('Responsive Layout', () => {
         return window.getComputedStyle(el).gridTemplateColumns;
       });
 
-      // Tablet should have single column at 768px
-      expect(gridColumns).toBe('1fr');
+      // Tablet should have single column at 768px (browser may compute 1fr to pixel value)
+      const columnCount = gridColumns.split(' ').length;
+      expect(columnCount).toBe(1);
     });
 
     test('should collapse three-column to single column', async ({ page }) => {
@@ -112,8 +113,9 @@ test.describe('Responsive Layout', () => {
         return window.getComputedStyle(el).gridTemplateColumns;
       });
 
-      // Should have 1 column on tablet
-      expect(gridColumns).toBe('1fr');
+      // Should have 1 column on tablet (browser may compute 1fr to pixel value)
+      const columnCount = gridColumns.split(' ').length;
+      expect(columnCount).toBe(1);
     });
 
     test('should collapse skills to single column', async ({ page }) => {
@@ -122,8 +124,9 @@ test.describe('Responsive Layout', () => {
         return window.getComputedStyle(el).gridTemplateColumns;
       });
 
-      // Skills should have 1 column on tablet
-      expect(gridColumns).toBe('1fr');
+      // Skills should have 1 column on tablet (browser may compute 1fr to pixel value)
+      const columnCount = gridColumns.split(' ').length;
+      expect(columnCount).toBe(1);
     });
 
     test('should display all form sections', async () => {
@@ -179,8 +182,9 @@ test.describe('Responsive Layout', () => {
         return window.getComputedStyle(el).gridTemplateColumns;
       });
 
-      // Mobile should have single column
-      expect(gridColumns).toBe('1fr');
+      // Mobile should have single column (browser may compute 1fr to pixel value)
+      const columnCount = gridColumns.split(' ').length;
+      expect(columnCount).toBe(1);
     });
 
     test('should display all form sections', async () => {
@@ -291,12 +295,13 @@ test.describe('Responsive Layout', () => {
       // Resize to mobile
       await page.setViewportSize({ width: 375, height: 667 });
 
-      // Check mobile layout
+      // Check mobile layout (browser may compute 1fr to pixel value)
       twoColumnSection = page.locator('.two-column').first();
       gridColumns = await twoColumnSection.evaluate((el) => {
         return window.getComputedStyle(el).gridTemplateColumns;
       });
-      expect(gridColumns).toBe('1fr');
+      const mobileColumnCount = gridColumns.split(' ').length;
+      expect(mobileColumnCount).toBe(1);
     });
 
     test('should maintain form data when resizing viewport', async ({ page }) => {

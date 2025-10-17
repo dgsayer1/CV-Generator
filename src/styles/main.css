@@ -472,8 +472,11 @@ textarea {
 @media (max-width: 768px) {
   .two-column,
   .three-column,
-  .skills-container {
-    grid-template-columns: 1fr;
+  .skills-container,
+  .job-entry .two-column,
+  .job-entry .two-column:first-child,
+  .education-entry .two-column {
+    grid-template-columns: 1fr !important;
   }
 
   .date-range-container .month-select {
