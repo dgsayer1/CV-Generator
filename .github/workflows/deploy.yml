@@ -47,6 +47,8 @@ jobs:
 
       - name: Build application
         run: npm run build
+        env:
+          VITE_BASE_PATH: /CV-Generator/
 
       - name: Run E2E tests
         run: npm run test:e2e
