@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="424" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="424" fill="#ffffff"/>
+
+  <!-- White header (no color) with more margin (18mm vs 15mm) -->
+  <text x="25" y="35" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#2d3748">JOHN DOE</text>
+  <text x="25" y="50" font-family="Helvetica, Arial, sans-serif" font-size="8.5" fill="#667eea">Software Engineer</text>
+
+  <!-- Thin divider line -->
+  <line x1="25" y1="58" x2="275" y2="58" stroke="#c8c8c8" stroke-width="0.3"/>
+
+  <!-- Contact info -->
+  <text x="25" y="70" font-family="Helvetica, Arial, sans-serif" font-size="6.5" fill="#666666">john.doe@example.com  •  San Francisco, CA</text>
+
+  <!-- Summary section -->
+  <text x="25" y="88" font-family="Helvetica, Arial, sans-serif" font-size="9" font-weight="bold" fill="#2d3748" letter-spacing="0.5">PROFESSIONAL SUMMARY</text>
+  <line x1="25" y1="91" x2="275" y2="91" stroke="#c8c8c8" stroke-width="0.2"/>
+  <text x="25" y="102" font-family="Helvetica, Arial, sans-serif" font-size="7.5" fill="#4a5568">Experienced software engineer with expertise in full-stack</text>
+  <text x="25" y="111" font-family="Helvetica, Arial, sans-serif" font-size="7.5" fill="#4a5568">development and cloud architecture.</text>
+
+  <!-- Skills section -->
+  <text x="25" y="130" font-family="Helvetica, Arial, sans-serif" font-size="9" font-weight="bold" fill="#2d3748" letter-spacing="0.5">SKILLS</text>
+  <line x1="25" y1="133" x2="275" y2="133" stroke="#c8c8c8" stroke-width="0.2"/>
+
+  <!-- Skill pills with sharp corners (no border radius) -->
+  <rect x="25" y="140" width="60" height="15" rx="0" fill="#ffffff" stroke="#c8c8c8" stroke-width="0.3"/>
+  <text x="30" y="150" font-family="Helvetica, Arial, sans-serif" font-size="7" fill="#4a5568">TypeScript</text>
+
+  <rect x="90" y="140" width="40" height="15" rx="0" fill="#ffffff" stroke="#c8c8c8" stroke-width="0.3"/>
+  <text x="95" y="150" font-family="Helvetica, Arial, sans-serif" font-size="7" fill="#4a5568">React</text>
+
+  <rect x="135" y="140" width="45" height="15" rx="0" fill="#ffffff" stroke="#c8c8c8" stroke-width="0.3"/>
+  <text x="140" y="150" font-family="Helvetica, Arial, sans-serif" font-size="7" fill="#4a5568">Node.js</text>
+
+  <!-- Work Experience -->
+  <text x="25" y="175" font-family="Helvetica, Arial, sans-serif" font-size="9" font-weight="bold" fill="#2d3748" letter-spacing="0.5">WORK EXPERIENCE</text>
+  <line x1="25" y1="178" x2="275" y2="178" stroke="#c8c8c8" stroke-width="0.2"/>
+
+  <!-- Job box with sharp corners and almost-white background -->
+  <rect x="25" y="185" width="250" height="55" rx="0" fill="#fcfcfc" stroke="#c8c8c8" stroke-width="0.3"/>
+  <text x="30" y="198" font-family="Helvetica, Arial, sans-serif" font-size="9" font-weight="bold" fill="#2d3748">Senior Software Engineer</text>
+  <text x="30" y="208" font-family="Helvetica, Arial, sans-serif" font-size="7.5" fill="#666666">Tech Corp</text>
+
+  <!-- Date badge (sharp corners, outlined) -->
+  <rect x="210" y="190" width="55" height="13" rx="0" fill="none" stroke="#c8c8c8" stroke-width="0.3"/>
+  <text x="215" y="199" font-family="Helvetica, Arial, sans-serif" font-size="7" fill="#666666">2020 - 2024</text>
+
+  <text x="30" y="220" font-family="Helvetica, Arial, sans-serif" font-size="7" fill="#555555">• Led development of microservices architecture</text>
+  <text x="30" y="230" font-family="Helvetica, Arial, sans-serif" font-size="7" fill="#555555">• Mentored junior developers</text>
+
+  <!-- Education -->
+  <text x="25" y="260" font-family="Helvetica, Arial, sans-serif" font-size="9" font-weight="bold" fill="#2d3748" letter-spacing="0.5">EDUCATION</text>
+  <line x1="25" y1="263" x2="275" y2="263" stroke="#c8c8c8" stroke-width="0.2"/>
+
+  <rect x="25" y="270" width="250" height="38" rx="0" fill="#fcfcfc" stroke="#c8c8c8" stroke-width="0.3"/>
+  <text x="30" y="283" font-family="Helvetica, Arial, sans-serif" font-size="9" font-weight="bold" fill="#2d3748">B.S. in Computer Science</text>
+  <text x="30" y="293" font-family="Helvetica, Arial, sans-serif" font-size="7.5" fill="#666666">University of California</text>
+
+  <rect x="210" y="275" width="55" height="13" rx="0" fill="none" stroke="#c8c8c8" stroke-width="0.3"/>
+  <text x="230" y="284" font-family="Helvetica, Arial, sans-serif" font-size="7" fill="#666666">2018</text>
+</svg>

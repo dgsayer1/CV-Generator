@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>CV Style Color Test</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .style-box {
+            margin: 20px 0;
+            padding: 20px;
+            border: 2px solid #ccc;
+            display: inline-block;
+            margin-right: 20px;
+        }
+        .color-swatch {
+            width: 100px;
+            height: 50px;
+            margin: 10px 0;
+            border: 1px solid #000;
+        }
+        h2 { margin: 0 0 10px 0; }
+        h3 { margin: 10px 0 5px 0; }
+    </style>
+</head>
+<body>
+    <h1>CV Style Color Comparison</h1>
+
+    <div class="style-box">
+        <h2>Modern</h2>
+        <h3>Header (uses theme color):</h3>
+        <div class="color-swatch" style="background: rgb(102, 126, 234);"></div>
+        <p>RGB: 102, 126, 234<br>#667eea (purple)</p>
+
+        <h3>Box Background:</h3>
+        <div class="color-swatch" style="background: rgb(249, 250, 251);"></div>
+        <p>RGB: 249, 250, 251<br>(light gray)</p>
+
+        <h3>Box Border:</h3>
+        <div class="color-swatch" style="background: rgb(229, 231, 235);"></div>
+        <p>RGB: 229, 231, 235<br>(gray)</p>
+    </div>
+
+    <div class="style-box">
+        <h2>Tech/Startup</h2>
+        <h3>Header (style-specific):</h3>
+        <div class="color-swatch" style="background: rgb(20, 184, 166);"></div>
+        <p>RGB: 20, 184, 166<br>#14b8a6 (teal)</p>
+
+        <h3>Box Background:</h3>
+        <div class="color-swatch" style="background: rgb(240, 253, 250);"></div>
+        <p>RGB: 240, 253, 250<br>(light teal)</p>
+
+        <h3>Box Border:</h3>
+        <div class="color-swatch" style="background: rgb(153, 246, 228);"></div>
+        <p>RGB: 153, 246, 228<br>(teal)</p>
+    </div>
+
+    <h2 style="margin-top: 40px;">Key Differences:</h2>
+    <ul>
+        <li><strong>Modern</strong> uses purple (#667eea) based on user's theme color selection</li>
+        <li><strong>Tech</strong> uses fixed teal (#14b8a6) regardless of theme color</li>
+        <li>Box backgrounds: Modern is neutral gray, Tech has light teal tint</li>
+        <li>Box borders: Modern is subtle gray, Tech is vibrant teal</li>
+    </ul>
+</body>
+</html>

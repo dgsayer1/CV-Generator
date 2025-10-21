@@ -1,4 +1,4 @@
-import type { CVData, PersonalInfo, Skills, JobEntry, EducationEntry, Reference } from './types';
+import type { CVData, CVStyle, PersonalInfo, Skills, JobEntry, EducationEntry, Reference } from './types';
 import { getDateRangeValue } from './datePicker';
 
 export function collectFormData(): CVData {
@@ -8,6 +8,7 @@ export function collectFormData(): CVData {
   const education = collectEducation();
   const certifications = collectCertifications();
   const references = collectReferences();
+  const cvStyle = (getInputValue('cv-style') || 'modern') as CVStyle;
   const themeColor = getInputValue('theme-color') || '#667eea';
   const fontFamily = (getInputValue('pdf-font') || 'helvetica') as 'helvetica' | 'times' | 'courier';
 
@@ -18,6 +19,7 @@ export function collectFormData(): CVData {
     education,
     certifications,
     references,
+    cvStyle,
     themeColor,
     fontFamily
   };

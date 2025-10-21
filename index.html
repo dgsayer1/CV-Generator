@@ -11,6 +11,15 @@
       <h1>Interactive CV Generator</h1>
       <p>Fill in your details and generate a professional PDF</p>
       <div class="header-controls">
+        <div class="style-picker-container" style="display: none;">
+          <label for="cv-style">CV Style:</label>
+          <select id="cv-style" aria-hidden="true">
+            <option value="modern">Modern</option>
+            <option value="minimalist">Minimalist Modern</option>
+            <option value="professional">Professional</option>
+            <option value="tech">Tech/Startup</option>
+          </select>
+        </div>
         <div class="color-picker-container">
           <label for="theme-color">Theme Color:</label>
           <input type="color" id="theme-color" value="#667eea">
@@ -23,6 +32,14 @@
             <option value="courier">Courier (Technical)</option>
           </select>
         </div>
+      </div>
+    </div>
+
+    <!-- Style Gallery Section -->
+    <div class="style-gallery-section">
+      <h2>Choose Your CV Style</h2>
+      <div id="style-gallery" class="style-gallery" role="radiogroup" aria-label="CV Style Selection">
+        <!-- Gallery cards will be dynamically generated here -->
       </div>
     </div>
 
@@ -146,6 +163,7 @@
 
       <div class="generate-section">
         <button class="generate-btn" id="generate-pdf-btn">Generate PDF</button>
+        <button class="export-btn" id="export-data-btn">Export Data (JSON)</button>
         <div class="status-message" id="status"></div>
       </div>
     </div>

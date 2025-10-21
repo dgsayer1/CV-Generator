@@ -8,6 +8,8 @@ export type PartialCVData = {
   certifications?: CVData['certifications'];
   references?: CVData['references'];
   themeColor?: string;
+  cvStyle?: CVData['cvStyle'];
+  fontFamily?: CVData['fontFamily'];
 };
 
 export async function loadFromURL(url: string): Promise<PartialCVData> {

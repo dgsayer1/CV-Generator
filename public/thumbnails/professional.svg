@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="424" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="300" height="424" fill="#ffffff"/>
+
+  <!-- White header with generous margins (20mm) -->
+  <text x="28" y="38" font-family="Georgia, Times, serif" font-size="15" font-weight="bold" fill="#1e293b">JOHN DOE</text>
+  <text x="28" y="53" font-family="Georgia, Times, serif" font-size="9" fill="#475569">Software Engineer</text>
+
+  <!-- Navy blue divider line (thicker: 0.8) -->
+  <line x1="28" y1="61" x2="272" y2="61" stroke="#1e3a8a" stroke-width="0.8"/>
+
+  <!-- Contact info -->
+  <text x="28" y="73" font-family="Georgia, Times, serif" font-size="6.5" fill="#64748b">john.doe@example.com  •  San Francisco, CA</text>
+
+  <!-- Summary section -->
+  <text x="28" y="93" font-family="Georgia, Times, serif" font-size="9.5" font-weight="bold" fill="#1e293b">PROFESSIONAL SUMMARY</text>
+  <line x1="28" y1="96" x2="272" y2="96" stroke="#1e3a8a" stroke-width="0.5"/>
+  <text x="28" y="108" font-family="Georgia, Times, serif" font-size="7.5" fill="#475569">Experienced software engineer with expertise in full-stack</text>
+  <text x="28" y="118" font-family="Georgia, Times, serif" font-size="7.5" fill="#475569">development and cloud architecture.</text>
+
+  <!-- Skills section -->
+  <text x="28" y="139" font-family="Georgia, Times, serif" font-size="9.5" font-weight="bold" fill="#1e293b">SKILLS</text>
+  <line x1="28" y1="142" x2="272" y2="142" stroke="#1e3a8a" stroke-width="0.5"/>
+
+  <!-- Skill pills with sharp corners and navy borders -->
+  <rect x="28" y="149" width="60" height="15" rx="0" fill="#ffffff" stroke="#1e3a8a" stroke-width="0.4"/>
+  <text x="33" y="159" font-family="Georgia, Times, serif" font-size="7" fill="#475569">TypeScript</text>
+
+  <rect x="93" y="149" width="40" height="15" rx="0" fill="#ffffff" stroke="#1e3a8a" stroke-width="0.4"/>
+  <text x="98" y="159" font-family="Georgia, Times, serif" font-size="7" fill="#475569">React</text>
+
+  <rect x="138" y="149" width="45" height="15" rx="0" fill="#ffffff" stroke="#1e3a8a" stroke-width="0.4"/>
+  <text x="143" y="159" font-family="Georgia, Times, serif" font-size="7" fill="#475569">Node.js</text>
+
+  <!-- Work Experience -->
+  <text x="28" y="182" font-family="Georgia, Times, serif" font-size="9.5" font-weight="bold" fill="#1e293b">WORK EXPERIENCE</text>
+  <line x1="28" y1="185" x2="272" y2="185" stroke="#1e3a8a" stroke-width="0.5"/>
+
+  <!-- Job box with sharp corners and light background -->
+  <rect x="28" y="192" width="244" height="58" rx="0" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.4"/>
+  <text x="33" y="205" font-family="Georgia, Times, serif" font-size="9" font-weight="bold" fill="#1e293b">Senior Software Engineer</text>
+  <text x="33" y="216" font-family="Georgia, Times, serif" font-size="7.5" fill="#475569">Tech Corp</text>
+
+  <!-- Filled date badge (navy background) -->
+  <rect x="210" y="197" width="55" height="13" rx="0" fill="#1e3a8a" stroke="none"/>
+  <text x="215" y="206" font-family="Georgia, Times, serif" font-size="7" fill="#ffffff">2020 - 2024</text>
+
+  <text x="33" y="228" font-family="Georgia, Times, serif" font-size="7" fill="#64748b">• Led development of microservices architecture</text>
+  <text x="33" y="238" font-family="Georgia, Times, serif" font-size="7" fill="#64748b">• Mentored junior developers</text>
+
+  <!-- Education -->
+  <text x="28" y="270" font-family="Georgia, Times, serif" font-size="9.5" font-weight="bold" fill="#1e293b">EDUCATION</text>
+  <line x1="28" y1="273" x2="272" y2="273" stroke="#1e3a8a" stroke-width="0.5"/>
+
+  <rect x="28" y="280" width="244" height="40" rx="0" fill="#f8fafc" stroke="#cbd5e1" stroke-width="0.4"/>
+  <text x="33" y="293" font-family="Georgia, Times, serif" font-size="9" font-weight="bold" fill="#1e293b">B.S. in Computer Science</text>
+  <text x="33" y="304" font-family="Georgia, Times, serif" font-size="7.5" fill="#475569">University of California</text>
+
+  <rect x="210" y="285" width="55" height="13" rx="0" fill="#1e3a8a" stroke="none"/>
+  <text x="230" y="294" font-family="Georgia, Times, serif" font-size="7" fill="#ffffff">2018</text>
+</svg>

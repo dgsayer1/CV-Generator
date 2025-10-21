@@ -1,3 +1,5 @@
+export type CVStyle = 'modern' | 'minimalist' | 'professional' | 'tech';
+
 export interface PersonalInfo {
   name: string;
   title: string;
@@ -46,6 +48,7 @@ export interface CVData {
   education: EducationEntry[];
   certifications: string[];
   references: [Reference, Reference];
+  cvStyle: CVStyle;
   themeColor: string;
   fontFamily: 'helvetica' | 'times' | 'courier';
 }

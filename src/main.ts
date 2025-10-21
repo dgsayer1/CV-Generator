@@ -1,4 +1,5 @@
 import './styles/main.css';
+import './styles/gallery.css';
 import { collectFormData } from './formHandler';
 import { addJobEntry, addEducationEntry, addCertificationEntry, addSkillCategoryEntry } from './entryManager';
 import { generatePDF } from './pdfGenerator';
@@ -13,6 +14,9 @@ import {
   defaultReferences,
 } from './defaultData';
 import { loadFromFile, type PartialCVData } from './jsonLoader';
+import { loadData, saveData } from './persistence';
+import type { CVStyle } from './types';
+import { getAllStyleMetadata, type StyleMetadata } from './styles/styleMetadata';
 
 function populateFormWithData(data: PartialCVData): void {
   // Personal Information
@@ -218,6 +222,22 @@ function populateFormWithData(data: PartialCVData): void {
       handleColorChange(event);
     }
   }
+
+  // CV Style
+  if (data.cvStyle) {
+    const styleSelector = document.getElementById('cv-style') as HTMLSelectElement;
+    if (styleSelector) {
+      styleSelector.value = data.cvStyle;
+    }
+  }
+
+  // Font family
+  if (data.fontFamily) {
+    const fontSelector = document.getElementById('pdf-font') as HTMLSelectElement;
+    if (fontSelector) {
+      fontSelector.value = data.fontFamily;
+    }
+  }
 }
 
 function populateDefaultData(): void {
@@ -263,18 +283,50 @@ function setupEventListeners(): void {
   const addCertificationBtn = document.getElementById('add-certification-btn');
   const addSkillCategoryBtn = document.getElementById('add-skill-category-btn');
   const generateBtn = document.getElementById('generate-pdf-btn');
+  const exportDataBtn = document.getElementById('export-data-btn');
   const colorPicker = document.getElementById('theme-color') as HTMLInputElement;
   const loadFileBtn = document.getElementById('load-file-btn');
   const downloadTemplateBtn = document.getElementById('download-template-btn');
+  const styleSelector = document.getElementById('cv-style') as HTMLSelectElement;
 
   addJobBtn?.addEventListener('click', () => addJobEntry());
   addEducationBtn?.addEventListener('click', () => addEducationEntry());
   addCertificationBtn?.addEventListener('click', () => addCertificationEntry());
   addSkillCategoryBtn?.addEventListener('click', () => addSkillCategoryEntry());
   generateBtn?.addEventListener('click', handleGeneratePDF);
+  exportDataBtn?.addEventListener('click', handleExportData);
   colorPicker?.addEventListener('input', handleColorChange);
   loadFileBtn?.addEventListener('click', handleLoadFromFile);
   downloadTemplateBtn?.addEventListener('click', handleDownloadTemplate);
+  styleSelector?.addEventListener('change', handleStyleChange);
+
+  setupAutosave();
+}
+
+let saveTimeout: ReturnType<typeof setTimeout> | undefined;
+
+function setupAutosave(): void {
+  const form = document.querySelector('form');
+  if (!form) return;
+
+  form.addEventListener('input', () => {
+    if (saveTimeout) {
+      clearTimeout(saveTimeout);
+    }
+    saveTimeout = setTimeout(() => {
+      const data = collectFormData();
+      const styleSelector = document.getElementById('cv-style') as HTMLSelectElement;
+      const selectedStyle = (styleSelector?.value || 'modern') as CVStyle;
+      saveData(data, selectedStyle);
+    }, 500);
+  });
+}
+
+function handleStyleChange(): void {
+  const data = collectFormData();
+  const styleSelector = document.getElementById('cv-style') as HTMLSelectElement;
+  const selectedStyle = (styleSelector?.value || 'modern') as CVStyle;
+  saveData(data, selectedStyle);
 }
 
 function handleColorChange(event: Event): void {
@@ -346,6 +398,30 @@ function displayImportStatus(message: string, success: boolean): void {
   }
 }
 
+function handleExportData(): void {
+  const data = collectFormData();
+  const timestamp = new Date().toISOString().split('T')[0]; // YYYY-MM-DD format
+
+  const dataStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([dataStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = `cv-data-${timestamp}.json`;
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+
+  const statusEl = document.getElementById('status');
+  if (statusEl) {
+    statusEl.textContent = '✓ Data exported successfully';
+    setTimeout(() => {
+      statusEl.textContent = '';
+    }, 3000);
+  }
+}
+
 function handleDownloadTemplate(): void {
   const template = {
     personal: {
@@ -413,7 +489,160 @@ function handleDownloadTemplate(): void {
   displayImportStatus('✓ Template downloaded successfully', true);
 }
 
+function renderStyleGallery(): void {
+  const galleryContainer = document.getElementById('style-gallery');
+  if (!galleryContainer) return;
+
+  const styles = getAllStyleMetadata();
+  const persistedData = loadData();
+  const selectedStyle = persistedData?.selectedStyle || 'modern';
+
+  galleryContainer.innerHTML = '';
+
+  styles.forEach((style) => {
+    const card = createStyleCard(style, selectedStyle);
+    galleryContainer.appendChild(card);
+  });
+}
+
+function createStyleCard(style: StyleMetadata, selectedStyle: CVStyle): HTMLElement {
+  const card = document.createElement('div');
+  card.className = `style-card ${style.id === selectedStyle ? 'selected' : ''}`;
+  card.setAttribute('role', 'radio');
+  card.setAttribute('aria-checked', style.id === selectedStyle ? 'true' : 'false');
+  card.setAttribute('aria-label', `${style.displayName} style`);
+  card.setAttribute('tabindex', style.id === selectedStyle ? '0' : '-1');
+  card.dataset.styleId = style.id;
+
+  const thumbnail = document.createElement('div');
+  thumbnail.className = 'style-thumbnail loading';
+
+  const img = document.createElement('img');
+  img.src = style.thumbnail;
+  img.alt = `${style.displayName} CV style preview`;
+  img.onerror = () => {
+    thumbnail.classList.remove('loading');
+    thumbnail.textContent = 'Preview coming soon';
+  };
+  img.onload = () => {
+    thumbnail.classList.remove('loading');
+  };
+  thumbnail.appendChild(img);
+
+  const info = document.createElement('div');
+  info.className = 'style-info';
+
+  const name = document.createElement('h3');
+  name.className = 'style-name';
+  name.textContent = style.displayName;
+
+  const description = document.createElement('p');
+  description.className = 'style-description';
+  description.textContent = style.description;
+
+  const tags = document.createElement('div');
+  tags.className = 'style-tags';
+  style.tags.forEach(tag => {
+    const tagEl = document.createElement('span');
+    tagEl.className = 'style-tag';
+    tagEl.textContent = tag;
+    tags.appendChild(tagEl);
+  });
+
+  const recommended = document.createElement('p');
+  recommended.className = 'style-recommended';
+  recommended.textContent = `Recommended for: ${style.recommendedFor.join(', ')}`;
+
+  info.appendChild(name);
+  info.appendChild(description);
+  info.appendChild(tags);
+  info.appendChild(recommended);
+
+  card.appendChild(thumbnail);
+  card.appendChild(info);
+
+  card.addEventListener('click', () => handleStyleCardClick(style.id));
+  card.addEventListener('keydown', (e) => handleStyleCardKeydown(e, style.id));
+
+  return card;
+}
+
+function handleStyleCardClick(styleId: CVStyle): void {
+  selectStyle(styleId);
+}
+
+function handleStyleCardKeydown(event: KeyboardEvent, styleId: CVStyle): void {
+  const gallery = document.getElementById('style-gallery');
+  if (!gallery) return;
+
+  const cards = Array.from(gallery.querySelectorAll<HTMLElement>('.style-card'));
+  const currentIndex = cards.findIndex(card => card.dataset.styleId === styleId);
+
+  switch (event.key) {
+    case 'Enter':
+    case ' ':
+      event.preventDefault();
+      selectStyle(styleId);
+      break;
+    case 'ArrowRight':
+    case 'ArrowDown':
+      event.preventDefault();
+      if (currentIndex < cards.length - 1) {
+        cards[currentIndex + 1]?.focus();
+      }
+      break;
+    case 'ArrowLeft':
+    case 'ArrowUp':
+      event.preventDefault();
+      if (currentIndex > 0) {
+        cards[currentIndex - 1]?.focus();
+      }
+      break;
+    case 'Home':
+      event.preventDefault();
+      cards[0]?.focus();
+      break;
+    case 'End':
+      event.preventDefault();
+      cards[cards.length - 1]?.focus();
+      break;
+  }
+}
+
+function selectStyle(styleId: CVStyle): void {
+  const gallery = document.getElementById('style-gallery');
+  const hiddenSelect = document.getElementById('cv-style') as HTMLSelectElement;
+
+  if (gallery) {
+    gallery.querySelectorAll('.style-card').forEach(card => {
+      const isSelected = card.getAttribute('data-style-id') === styleId;
+      card.classList.toggle('selected', isSelected);
+      card.setAttribute('aria-checked', isSelected ? 'true' : 'false');
+      card.setAttribute('tabindex', isSelected ? '0' : '-1');
+    });
+  }
+
+  if (hiddenSelect) {
+    hiddenSelect.value = styleId;
+  }
+
+  const data = collectFormData();
+  saveData(data, styleId);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-  populateDefaultData();
+  const persistedData = loadData();
+
+  if (persistedData) {
+    populateFormWithData(persistedData.cvData);
+    const styleSelector = document.getElementById('cv-style') as HTMLSelectElement;
+    if (styleSelector) {
+      styleSelector.value = persistedData.selectedStyle;
+    }
+  } else {
+    populateDefaultData();
+  }
+
+  renderStyleGallery();
   setupEventListeners();
 });
