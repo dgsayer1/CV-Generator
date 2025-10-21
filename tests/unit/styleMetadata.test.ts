@@ -13,6 +13,7 @@ describe('Style Metadata', () => {
       expect(styleMetadata).toHaveProperty('modern');
       expect(styleMetadata).toHaveProperty('minimalist');
       expect(styleMetadata).toHaveProperty('professional');
+      expect(styleMetadata).toHaveProperty('tech');
     });
 
     it('has complete metadata for modern style', () => {
@@ -153,7 +154,7 @@ describe('Style Metadata', () => {
     it('returns array of all metadata', () => {
       const allMetadata = getAllStyleMetadata();
       expect(Array.isArray(allMetadata)).toBe(true);
-      expect(allMetadata.length).toBe(3);
+      expect(allMetadata.length).toBe(4);
     });
 
     it('returned array contains modern metadata', () => {
@@ -283,7 +284,7 @@ describe('Style Metadata', () => {
 
   describe('Type Safety', () => {
     it('getStyleMetadata accepts valid CVStyle values', () => {
-      const styles: CVStyle[] = ['modern', 'minimalist', 'professional'];
+      const styles: CVStyle[] = ['modern', 'minimalist', 'professional', 'tech'];
       styles.forEach(style => {
         const metadata = getStyleMetadata(style);
         expect(metadata).toBeDefined();
