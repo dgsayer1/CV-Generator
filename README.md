@@ -1,18 +1,24 @@
 # CV Generator
 
-[![Build and Deploy](https://github.com/yourusername/cv-generator/actions/workflows/deploy.yml/badge.svg)](https://github.com/yourusername/cv-generator/actions/workflows/deploy.yml)
-[![CI](https://github.com/yourusername/cv-generator/actions/workflows/ci.yml/badge.svg)](https://github.com/yourusername/cv-generator/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/yourusername/cv-generator/branch/main/graph/badge.svg)](https://codecov.io/gh/yourusername/cv-generator)
+[![Build and Deploy](https://github.com/dgsayer1/CV-Generator/actions/workflows/deploy.yml/badge.svg)](https://github.com/dgsayer1/CV-Generator/actions/workflows/deploy.yml)
+[![CI](https://github.com/dgsayer1/CV-Generator/actions/workflows/ci.yml/badge.svg)](https://github.com/dgsayer1/CV-Generator/actions/workflows/ci.yml)
+[![codecov](https://codecov.io/gh/dgsayer1/CV-Generator/branch/main/graph/badge.svg)](https://codecov.io/gh/dgsayer1/CV-Generator)
 
 A modern, client-side web application for creating professional CVs with live preview and PDF export functionality. Built with TypeScript, Vite, and jsPDF.
 
+## 🚀 [Live Demo](https://dgsayer1.github.io/CV-Generator/)
+
 ## Features
 
+- **Multiple CV Styles**: Choose from 4 professionally designed templates (Modern, Minimalist, Professional, Tech/Startup)
 - **Interactive Form Builder**: Dynamic sections for personal info, work experience, education, certifications, and references
-- **Real-time PDF Generation**: Instantly generate professional PDFs with custom formatting
+- **Real-time PDF Generation**: Instantly generate professional PDFs with custom formatting and colors
+- **Theme Customization**: Customize theme color and font selection for your PDF output
+- **Data Import/Export**: Load CV data from JSON templates or export your data for backup
 - **Responsive Design**: Works seamlessly on desktop, tablet, and mobile devices
 - **Type-Safe**: Built with TypeScript in strict mode for reliability
 - **No Backend Required**: 100% client-side, your data never leaves your browser
+- **Auto-Save**: Automatic localStorage persistence - never lose your work
 - **Modern Stack**: Vite for blazing fast development and optimized production builds
 - **Comprehensive Testing**: 114 unit tests + 99 E2E tests across 5 browser configurations
 
@@ -29,23 +35,36 @@ A modern, client-side web application for creating professional CVs with live pr
 ```
 cv-generator/
 ├── src/
-│   ├── main.ts              # Entry point and event listeners
-│   ├── types.ts             # TypeScript interfaces
-│   ├── formHandler.ts       # Form data collection
-│   ├── entryManager.ts      # Dynamic entry add/remove
-│   ├── pdfGenerator.ts      # PDF generation logic
-│   ├── pdfHelpers.ts        # PDF utility functions
-│   ├── validation.ts        # Form validation
+│   ├── main.ts                    # Entry point and event listeners
+│   ├── types.ts                   # TypeScript interfaces
+│   ├── formHandler.ts             # Form data collection
+│   ├── entryManager.ts            # Dynamic entry add/remove
+│   ├── pdfGenerator.ts            # PDF generation orchestration
+│   ├── pdfHelpers.ts              # PDF utility functions
+│   ├── validation.ts              # Form validation
+│   ├── persistence.ts             # localStorage management
+│   ├── jsonLoader.ts              # JSON import/export
+│   ├── defaultData.ts             # Demo data
+│   ├── datePicker.ts              # Date range picker
 │   └── styles/
-│       └── main.css         # Application styles
+│       ├── main.css               # Application styles
+│       ├── gallery.css            # Style gallery layout
+│       ├── styleConfig.ts         # Style registry
+│       ├── styleMetadata.ts       # Style descriptions
+│       ├── modernStyle.ts         # Modern CV template
+│       ├── minimalistStyle.ts     # Minimalist CV template
+│       ├── professionalStyle.ts   # Professional CV template
+│       └── techStyle.ts           # Tech/Startup CV template
 ├── tests/
-│   ├── unit/                # Unit tests
-│   └── e2e/                 # Playwright E2E tests
-├── index.html               # HTML shell
+│   ├── unit/                      # 114 unit tests (Vitest)
+│   └── e2e/                       # 99 E2E tests (Playwright)
+├── public/
+│   └── thumbnails/                # Style preview thumbnails
+├── index.html                     # HTML shell
 ├── package.json
 ├── tsconfig.json
 ├── vite.config.ts
-└── playwright.config.ts
+└── vitest.config.mts
 ```
 
 ## Quick Start
@@ -138,15 +157,63 @@ Strict mode enabled with:
 - `noUncheckedIndexedAccess`
 - `exactOptionalPropertyTypes`
 
+## CV Style Templates
+
+The application includes 4 professionally designed CV templates, each with unique layouts and design elements:
+
+### 🎨 Modern (Default)
+- Clean, contemporary design with gradient header
+- Two-column skills layout
+- Color accents for section headers
+- Ideal for: Tech professionals, designers, modern industries
+
+### ✨ Minimalist
+- Ultra-clean design with minimal visual elements
+- Focus on content and readability
+- Subtle section dividers
+- Ideal for: Traditional industries, academic positions
+
+### 💼 Professional
+- Classic business-oriented layout
+- Structured format with clear hierarchy
+- Conservative color palette
+- Ideal for: Corporate roles, management positions, consulting
+
+### 🚀 Tech/Startup
+- Bold, contemporary design
+- Modern typography and spacing
+- Technical aesthetic with code-like elements
+- Ideal for: Software engineers, tech startups, creative tech roles
+
+All styles support:
+- Custom theme color selection
+- Font customization (Helvetica, Times, Courier)
+- Automatic layout adjustments for content length
+- Responsive PDF generation
+
 ## Color Scheme
 
-- Primary: `#667eea` (purple)
-- Secondary: `#764ba2` (darker purple)
+**Default Theme**: Purple gradient (`#667eea` to `#764ba2`)
+
+The theme color is fully customizable via the color picker in the header. Your selected color will be applied to:
+- PDF header gradients
+- Section headers and accents
+- Interactive elements in the form
+
+**UI Colors**:
 - Background: `#f0f2f5`
 - Text Dark: `#2d3748`
 - Text Grey: `#666666`
 
 ## Features in Detail
+
+### CV Style Selection
+
+- **Visual Gallery**: Browse and select from 4 CV templates with thumbnail previews
+- **Live Preview**: See style descriptions and key features before selection
+- **Persistent Choice**: Your selected style is saved and remembered
+- **Easy Switching**: Change styles anytime with instant PDF updates
+- **Keyboard Navigation**: Full keyboard support for accessibility
 
 ### Personal Information
 
