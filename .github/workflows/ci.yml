@@ -35,6 +35,8 @@ jobs:
       - name: Upload coverage reports
         uses: codecov/codecov-action@v4
         continue-on-error: true
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
           files: ./coverage/coverage-final.json
           flags: unittests

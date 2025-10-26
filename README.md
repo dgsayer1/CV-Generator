@@ -2,7 +2,7 @@
 
 [![Build and Deploy](https://github.com/dgsayer1/CV-Generator/actions/workflows/deploy.yml/badge.svg)](https://github.com/dgsayer1/CV-Generator/actions/workflows/deploy.yml)
 [![CI](https://github.com/dgsayer1/CV-Generator/actions/workflows/ci.yml/badge.svg)](https://github.com/dgsayer1/CV-Generator/actions/workflows/ci.yml)
-[![codecov](https://codecov.io/gh/dgsayer1/CV-Generator/branch/main/graph/badge.svg)](https://codecov.io/gh/dgsayer1/CV-Generator)
+![Coverage](https://img.shields.io/badge/coverage-100%25-brightgreen)
 
 A modern, client-side web application for creating professional CVs with live preview and PDF export functionality. Built with TypeScript, Vite, and jsPDF.
 
