@@ -217,8 +217,8 @@ test.describe('CV Style Selector', () => {
       expect(modernDownload.suggestedFilename()).toBe('John_Doe_CV.pdf');
       await cvPage.verifySuccessMessage();
 
-      // Wait a moment
-      await page.waitForTimeout(500);
+      // Ensure download completed before proceeding
+      await modernDownload.path();
 
       // Switch to Minimalist Modern style
       await styleSelector.selectOption('minimalist');
@@ -457,10 +457,11 @@ test.describe('CV Style Selector', () => {
       // Test Modern style performance
       await styleSelector.selectOption('modern');
       const modernStart = Date.now();
-      await cvPage.generatePDF();
+      const modernDownload = await cvPage.generatePDF();
       const modernDuration = Date.now() - modernStart;
 
-      await page.waitForTimeout(500);
+      // Ensure download completed before proceeding
+      await modernDownload.path();
 
       // Test Minimalist style performance
       await styleSelector.selectOption('minimalist');

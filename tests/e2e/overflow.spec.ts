@@ -69,8 +69,8 @@ test.describe('Overflow Prevention', () => {
     const longTitle = 'A'.repeat(200);
     await titleInput.fill(longTitle);
 
-    // Wait for any layout changes
-    await page.waitForTimeout(100);
+    // Wait for input to be filled and layout to stabilize
+    await expect(titleInput).toHaveValue(longTitle);
 
     const parent = lastJob;
     const titleBox = await titleInput.boundingBox();

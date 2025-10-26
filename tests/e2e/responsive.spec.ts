@@ -234,8 +234,15 @@ test.describe('Responsive Layout', () => {
       const initialCount = await cvPage.getJobCount();
       await cvPage.addJobButton.click();
 
-      // Wait for new entry to be added
-      await cvPage.page.waitForTimeout(500);
+      // Wait for job count to increase
+      await cvPage.page.waitForFunction(
+        (expected) => {
+          const jobs = document.querySelectorAll('#jobs-section .job-entry');
+          return jobs.length === expected;
+        },
+        initialCount + 1,
+        { timeout: 5000 }
+      );
 
       const newCount = await cvPage.getJobCount();
       expect(newCount).toBe(initialCount + 1);
