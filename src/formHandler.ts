@@ -1,6 +1,16 @@
 import type { CVData, CVStyle, PersonalInfo, Skills, JobEntry, EducationEntry, Reference } from './types';
 import { getDateRangeValue } from './datePicker';
 
+export function getSelectedStyle(): CVStyle {
+  const gallery = document.getElementById('style-gallery');
+  if (!gallery) return 'modern';
+
+  const selectedCard = gallery.querySelector('.style-card.selected');
+  if (!selectedCard) return 'modern';
+
+  return (selectedCard.getAttribute('data-style-id') || 'modern') as CVStyle;
+}
+
 export function collectFormData(): CVData {
   const personal = collectPersonalInfo();
   const skills = collectSkills();
@@ -8,7 +18,7 @@ export function collectFormData(): CVData {
   const education = collectEducation();
   const certifications = collectCertifications();
   const references = collectReferences();
-  const cvStyle = (getInputValue('cv-style') || 'modern') as CVStyle;
+  const cvStyle = getSelectedStyle();
   const themeColor = getInputValue('theme-color') || '#667eea';
   const fontFamily = (getInputValue('pdf-font') || 'helvetica') as 'helvetica' | 'times' | 'courier';
 

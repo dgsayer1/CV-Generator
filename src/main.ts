@@ -1,6 +1,6 @@
 import './styles/main.css';
 import './styles/gallery.css';
-import { collectFormData } from './formHandler';
+import { collectFormData, getSelectedStyle } from './formHandler';
 import { addJobEntry, addEducationEntry, addCertificationEntry, addSkillCategoryEntry } from './entryManager';
 import { generatePDF } from './pdfGenerator';
 import { createDatePicker, setDateRangeValue } from './datePicker';
@@ -315,8 +315,7 @@ function setupAutosave(): void {
     }
     saveTimeout = setTimeout(() => {
       const data = collectFormData();
-      const styleSelector = document.getElementById('cv-style') as HTMLSelectElement;
-      const selectedStyle = (styleSelector?.value || 'modern') as CVStyle;
+      const selectedStyle = getSelectedStyle();
       saveData(data, selectedStyle);
     }, 500);
   });
@@ -324,8 +323,7 @@ function setupAutosave(): void {
 
 function handleStyleChange(): void {
   const data = collectFormData();
-  const styleSelector = document.getElementById('cv-style') as HTMLSelectElement;
-  const selectedStyle = (styleSelector?.value || 'modern') as CVStyle;
+  const selectedStyle = getSelectedStyle();
   saveData(data, selectedStyle);
 }
 
@@ -611,7 +609,6 @@ function handleStyleCardKeydown(event: KeyboardEvent, styleId: CVStyle): void {
 
 function selectStyle(styleId: CVStyle): void {
   const gallery = document.getElementById('style-gallery');
-  const hiddenSelect = document.getElementById('cv-style') as HTMLSelectElement;
 
   if (gallery) {
     gallery.querySelectorAll('.style-card').forEach(card => {
@@ -620,10 +617,6 @@ function selectStyle(styleId: CVStyle): void {
       card.setAttribute('aria-checked', isSelected ? 'true' : 'false');
       card.setAttribute('tabindex', isSelected ? '0' : '-1');
     });
-  }
-
-  if (hiddenSelect) {
-    hiddenSelect.value = styleId;
   }
 
   const data = collectFormData();
@@ -635,10 +628,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (persistedData) {
     populateFormWithData(persistedData.cvData);
-    const styleSelector = document.getElementById('cv-style') as HTMLSelectElement;
-    if (styleSelector) {
-      styleSelector.value = persistedData.selectedStyle;
-    }
   } else {
     populateDefaultData();
   }
