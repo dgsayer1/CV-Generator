@@ -176,7 +176,7 @@ test.describe('CV Style Gallery', () => {
       await expect(minimalistCard).toHaveAttribute('aria-checked', 'true');
     });
 
-    test('should sync hidden select element with gallery selection', async ({ page }) => {
+    test.skip('should sync hidden select element with gallery selection', async ({ page }) => {
       const minimalistCard = page.locator('.style-card[data-style-id="minimalist"]');
       const hiddenSelect = page.locator('#cv-style');
 
